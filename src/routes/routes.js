@@ -2,6 +2,7 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {Login} from '../pages/index';
+import Dashboard from '../shared/navigator/bottomNavigator';
 
 const Routes = () => {
   const Stack = createStackNavigator();
@@ -11,6 +12,11 @@ const Routes = () => {
         <Stack.Screen
           name="login"
           component={Login}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="dashboard"
+          component={Dashboard}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

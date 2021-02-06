@@ -4,5 +4,7 @@ export const THEME = {
     secondary: '',
     white: '#fff',
     black: '#000',
+    lightGrey: '#D4D2D2',
+    grey: 'grey',
   },
 };

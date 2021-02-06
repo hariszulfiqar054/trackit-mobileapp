@@ -5,7 +5,7 @@ import * as Work from '../exporter';
 const SafeWrapper = ({children, style}) => {
   return (
     <>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar barStyle="default" />
       <SafeAreaView style={[styles.container, style]}>{children}</SafeAreaView>
     </>
   );
