@@ -1,7 +1,7 @@
 import React from 'react';
 import Routes from './src/routes/routes';
 import {Provider} from 'react-redux';
-import {STORE, PERSISTOR} from './src/store/storeConfig';
+import {STORE, PERSISTOR} from './src/store/store.config';
 import {PersistGate} from 'redux-persist/integration/react';
 
 const App = () => {
@@ -15,5 +15,3 @@ const App = () => {
 };
 
 export default App;
-
-const styles = StyleSheet.create({});
