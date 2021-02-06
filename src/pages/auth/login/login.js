@@ -1,11 +1,14 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
+import Btn from '../../../shared/components/btn';
+import SafeWrapper from '../../../shared/components/safeWrapper';
 
 const Login = () => {
   return (
-    <View>
+    <SafeWrapper>
       <Text>Login</Text>
-    </View>
+      <Btn label="Login" />
+    </SafeWrapper>
   );
 };
 

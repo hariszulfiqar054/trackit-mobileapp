@@ -1,7 +1,7 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import Login from '../pages/auth/login/login';
+import {Login} from '../pages/index';
 
 const Routes = () => {
   const Stack = createStackNavigator();
