@@ -1,11 +1,12 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
+import {Header, SafeWrapper} from '../../../shared/components';
 
-const Chat = () => {
+const Chat = ({navigation}) => {
   return (
-    <View>
-      <Text></Text>
-    </View>
+    <SafeWrapper>
+      <Header label="Chat" drawer={navigation} />
+    </SafeWrapper>
   );
 };
 

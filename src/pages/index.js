@@ -4,3 +4,5 @@ export {default as Chat} from './home/chat/chat';
 export {default as Profile} from './home/profile/profile';
 export {default as Order} from './home/order/order';
 export {default as Setting} from './home/setting/setting';
+export {default as Stock} from './home/stock/stock';
+export {default as Cart} from './home/cart/cart';

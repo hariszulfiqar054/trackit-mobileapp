@@ -2,14 +2,14 @@ import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {Header, SafeWrapper} from '../../../shared/components';
 
-const Order = ({navigation}) => {
+const Stock = ({navigation}) => {
   return (
     <SafeWrapper>
-      <Header label="Orders" drawer={navigation} />
+      <Header label="Stocks" drawer={navigation} />
     </SafeWrapper>
   );
 };
 
-export default Order;
+export default Stock;
 
 const styles = StyleSheet.create({});

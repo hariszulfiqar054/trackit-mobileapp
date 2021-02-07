@@ -1,8 +1,8 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {Login} from '../pages/index';
-import Dashboard from '../shared/navigator/bottomNavigator';
+import {Login, Cart} from '../pages/index';
+import Dashboard from '../shared/navigator/drawerNavigator';
 
 const Routes = () => {
   const Stack = createStackNavigator();
@@ -17,6 +17,11 @@ const Routes = () => {
         <Stack.Screen
           name="dashboard"
           component={Dashboard}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="cart"
+          component={Cart}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

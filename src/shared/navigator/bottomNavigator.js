@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text, StyleSheet} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {Announcement, Chat, Setting, Order} from '../../pages/index';
+import {Announcement, Chat, Order, Stock} from '../../pages/index';
 import * as Work from '../exporter';
 import Eicon from 'react-native-vector-icons/Entypo';
 import Mcicon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -14,14 +14,14 @@ const {
 } = Work;
 const BottomNavigator = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator initialRouteName="Announcement">
       <Tab.Screen
-        name="Setting"
-        component={Setting}
+        name="Stock"
+        component={Stock}
         options={{
           tabBarIcon: ({focused}) => (
-            <Ficon
-              name="player-settings"
+            <Eicon
+              name="list"
               size={WP('5')}
               color={focused ? colors.primary : colors.lightGrey}
             />
@@ -32,7 +32,7 @@ const BottomNavigator = () => {
                 styles.txt,
                 {color: focused ? colors.primary : colors.lightGrey},
               ]}>
-              Setting
+              Stock
             </Text>
           ),
         }}
