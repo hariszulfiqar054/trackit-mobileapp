@@ -1,7 +1,7 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {Login, Cart} from '../pages/index';
+import {Login, Cart, Profile} from '../pages/index';
 import Dashboard from '../shared/navigator/drawerNavigator';
 
 const Routes = () => {
@@ -22,6 +22,12 @@ const Routes = () => {
         <Stack.Screen
           name="cart"
           component={Cart}
+          options={{headerShown: false}}
+        />
+
+        <Stack.Screen
+          name="profile"
+          component={Profile}
           options={{headerShown: false}}
         />
       </Stack.Navigator>
