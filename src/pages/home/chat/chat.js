@@ -18,9 +18,7 @@ const {
 const Chat = ({navigation}) => {
   return (
     <SafeWrapper>
-      <KeyboardAwareScrollView
-        keyboardDismissMode="on-drag"
-        keyboardShouldPersistTaps={false}>
+      <KeyboardAwareScrollView>
         <Header label="Chat" drawer={navigation} />
         <MessageComponent
           message="hi my name is haris"

@@ -14,7 +14,7 @@ const MessageComponent = ({sender, date, message}) => {
         styles.container,
         {
           alignSelf: sender ? 'flex-end' : 'flex-start',
-          backgroundColor: sender ? '#d0e8f2' : colors.lightBlue,
+          backgroundColor: sender ? colors.lightBlue : '#d0e8f2',
         },
       ]}>
       <Text style={styles.txt}>{message}</Text>

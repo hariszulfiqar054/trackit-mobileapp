@@ -5,3 +5,4 @@ export {default as Textinput} from './Textinput';
 export {default as Header} from './header';
 export {default as AnnouncementCard} from './announcementCard';
 export {default as MessageComponent} from './messageComponent';
+export {default as OrderCard} from './orderCard';
