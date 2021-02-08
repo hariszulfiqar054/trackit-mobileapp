@@ -11,7 +11,7 @@ const SafeWrapper = ({children, style}) => {
   );
 };
 
-export default SafeWrapper;
+export default React.memo(SafeWrapper);
 
 const styles = StyleSheet.create({
   container: {

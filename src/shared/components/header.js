@@ -31,7 +31,7 @@ const Header = ({label, drawer}) => {
   );
 };
 
-export default Header;
+export default React.memo(Header);
 
 const styles = StyleSheet.create({
   container: {

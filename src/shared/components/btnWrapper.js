@@ -15,4 +15,4 @@ const BtnWrapper = ({children, onPress}) => {
   );
 };
 
-export default BtnWrapper;
+export default React.memo(BtnWrapper);

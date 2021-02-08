@@ -18,7 +18,7 @@ const AnnouncementCard = ({city, message, date}) => {
   );
 };
 
-export default AnnouncementCard;
+export default React.memo(AnnouncementCard);
 
 const styles = StyleSheet.create({
   container: {

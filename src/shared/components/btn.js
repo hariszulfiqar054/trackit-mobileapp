@@ -22,7 +22,7 @@ const Btn = ({containerStyle, labelStyle, label, onPress, isLoading}) => {
   );
 };
 
-export default Btn;
+export default React.memo(Btn);
 
 const styles = StyleSheet.create({
   container: {

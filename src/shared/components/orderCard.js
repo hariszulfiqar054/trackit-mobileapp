@@ -21,12 +21,7 @@ const OrderCard = ({onPress, orderId, shop, date, amount}) => {
           <Text style={{fontWeight: 'bold'}}>Shop : </Text>
           <Text>{shop}</Text>
         </Text>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}>
+        <View style={styles.row}>
           <Text style={styles.order}>
             <Text style={{fontWeight: 'bold'}}>Dated : </Text>
             <Text>{moment(date).format('DD-MM-YYYY')}</Text>
@@ -41,7 +36,7 @@ const OrderCard = ({onPress, orderId, shop, date, amount}) => {
   );
 };
 
-export default OrderCard;
+export default React.memo(OrderCard);
 
 const styles = StyleSheet.create({
   container: {
@@ -55,5 +50,10 @@ const styles = StyleSheet.create({
   order: {
     color: colors.grey,
     padding: WP('2'),
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 });

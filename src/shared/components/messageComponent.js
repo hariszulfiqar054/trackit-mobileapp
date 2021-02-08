@@ -23,7 +23,7 @@ const MessageComponent = ({sender, date, message}) => {
   );
 };
 
-export default MessageComponent;
+export default React.memo(MessageComponent);
 
 const styles = StyleSheet.create({
   container: {

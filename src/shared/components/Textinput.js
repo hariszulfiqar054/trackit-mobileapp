@@ -20,7 +20,7 @@ const Textinput = (props) => {
   );
 };
 
-export default Textinput;
+export default React.memo(Textinput);
 
 const styles = StyleSheet.create({
   inputContainer: {
