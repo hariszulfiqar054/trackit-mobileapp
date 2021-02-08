@@ -22,7 +22,11 @@ const Chat = ({navigation}) => {
         keyboardDismissMode="on-drag"
         keyboardShouldPersistTaps={false}>
         <Header label="Chat" drawer={navigation} />
-        <MessageComponent message="hi my name is haris" />
+        <MessageComponent
+          message="hi my name is haris"
+          date={Date.now()}
+          sender
+        />
         <View style={styles.msgContainer}>
           <Textinput
             placeholder="Type message..."
