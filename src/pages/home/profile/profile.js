@@ -1,41 +1,64 @@
 import React from 'react';
 import {StyleSheet, Text, View, ImageBackground, Image} from 'react-native';
-import {SafeWrapper, BtnWrapper} from '../../../shared/components';
+import {
+  SafeWrapper,
+  BtnWrapper,
+  Textinput,
+  Btn,
+} from '../../../shared/components';
 import * as Work from '../../../shared/exporter';
 import Micon from 'react-native-vector-icons/MaterialIcons';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 
 const {
   WP,
+  HP,
   THEME: {colors},
 } = Work;
 const Profile = ({navigation}) => {
   return (
     <SafeWrapper>
-      <ImageBackground
-        style={styles.imgBg}
-        source={require('../../../assets/img/profilebg.png')}>
-        <View style={styles.headerContainer}>
-          <BtnWrapper onPress={() => navigation.goBack()}>
-            <Micon
-              style={styles.icon}
-              color={colors.white}
-              size={WP('8')}
-              name="keyboard-arrow-left"
+      <KeyboardAwareScrollView>
+        <ImageBackground
+          style={styles.imgBg}
+          source={require('../../../assets/img/profilebg.png')}>
+          <View style={styles.headerContainer}>
+            <BtnWrapper onPress={() => navigation.goBack()}>
+              <Micon
+                style={styles.icon}
+                color={colors.white}
+                size={WP('8')}
+                name="keyboard-arrow-left"
+              />
+            </BtnWrapper>
+
+            <Text style={styles.headerLabel}>PROFILE</Text>
+          </View>
+          <BtnWrapper onPress={() => console.log('JI')}>
+            <Image
+              style={styles.img}
+              source={{
+                uri:
+                  'https://www.xovi.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png',
+              }}
             />
           </BtnWrapper>
-
-          <Text style={styles.headerLabel}>PROFILE</Text>
-        </View>
-        <BtnWrapper onPress={() => console.log('JI')}>
-          <Image
-            style={styles.img}
-            source={{
-              uri:
-                'https://www.xovi.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png',
-            }}
+        </ImageBackground>
+        <View style={styles.fieldsContainer}>
+          <Textinput label="Name" placeholder="Enter Name.." />
+          <Textinput
+            label="Phone no."
+            placeholder="Enter Phone no..."
+            keyboardType="phone-pad"
           />
-        </BtnWrapper>
-      </ImageBackground>
+          <Textinput
+            label="Password"
+            placeholder="Enter Password..."
+            secureTextEntry
+          />
+        </View>
+        <Btn label="Update" containerStyle={{marginBottom: WP('5')}} />
+      </KeyboardAwareScrollView>
     </SafeWrapper>
   );
 };
@@ -45,7 +68,7 @@ export default Profile;
 const styles = StyleSheet.create({
   imgBg: {
     width: '100%',
-    height: '60%',
+    height: HP('30'),
   },
   headerLabel: {
     fontSize: WP('6'),
@@ -71,5 +94,10 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     alignSelf: 'center',
     marginTop: WP('20'),
+    borderWidth: 1,
+    borderColor: colors.grey,
+  },
+  fieldsContainer: {
+    flex: 1,
   },
 });
