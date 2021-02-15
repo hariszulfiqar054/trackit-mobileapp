@@ -5,6 +5,7 @@ import {
   SafeWrapper,
   BtnWrapper,
   CartCard,
+  Btn,
 } from '../../../shared/components/index';
 import Micon from 'react-native-vector-icons/MaterialIcons';
 
@@ -30,7 +31,32 @@ const Cart = ({navigation}) => {
           <Text style={styles.label}>Cart</Text>
         </View>
       </View>
-      <CartCard name="Brake Shoe" price="120" qty={2} />
+      <View style={{height: '70%'}}>
+        <CartCard name="Brake Shoe" price="120" qty={2} />
+      </View>
+      <View>
+        <Text style={[styles.label, {paddingStart: WP('4')}]}>Order Info</Text>
+        <View style={{flexDirection: 'row'}}>
+          <Text
+            style={[
+              styles.label,
+              {paddingStart: WP('4'), paddingTop: WP('4'), fontWeight: 'bold'},
+            ]}>
+            Total :
+          </Text>
+          <Text
+            style={[
+              styles.label,
+              {paddingStart: WP('1'), paddingTop: WP('4')},
+            ]}>
+            20000
+          </Text>
+        </View>
+        <Btn
+          label="Proceed to Checkout"
+          containerStyle={{marginTop: WP('7'), marginBottom: WP('5')}}
+        />
+      </View>
     </SafeWrapper>
   );
 };
