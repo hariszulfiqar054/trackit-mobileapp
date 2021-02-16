@@ -6,6 +6,10 @@ import {persistStore, persistReducer} from 'redux-persist';
 import authReducer from './reducer/auth.reducer';
 import axios from 'axios';
 
+// Axios Configuration
+axios.defaults.baseURL = 'https://9999e2fd24a6.ngrok.io/api/';
+
+// Redux Configuration
 const rootReducer = combineReducers({
   auth: authReducer,
 });
@@ -13,12 +17,11 @@ const rootReducer = combineReducers({
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  // blacklist: []
+  whitelist: ['auth'],
 };
 const middleware = applyMiddleware(promise, thunk);
 
 let composeEnhancers = compose;
-
 if (__DEV__) {
   composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 }

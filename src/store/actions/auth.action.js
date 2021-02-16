@@ -1,7 +1,9 @@
 import * as Types from '../action.types';
-export const saveUser = (user) => {
+const saveUser = (user) => {
   return {
     type: Types.SAVE_USER,
     payload: user,
   };
 };
+
+export {saveUser};
