@@ -8,6 +8,15 @@ import axios from 'axios';
 
 // Axios Configuration
 axios.defaults.baseURL = 'https://9999e2fd24a6.ngrok.io/api/';
+axios.interceptors.request.use(
+  (config) => {
+    config.headers.Authorization = STORE.getState().user.token;
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  },
+);
 
 // Redux Configuration
 const rootReducer = combineReducers({
