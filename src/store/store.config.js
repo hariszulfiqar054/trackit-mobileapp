@@ -4,13 +4,14 @@ import promise from 'redux-promise-middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {persistStore, persistReducer} from 'redux-persist';
 import authReducer from './reducer/auth.reducer';
+import Env from '../env/env';
 import axios from 'axios';
 
 // Axios Configuration
-axios.defaults.baseURL = 'https://9999e2fd24a6.ngrok.io/api/';
+axios.defaults.baseURL = Env.BASE_URL;
 axios.interceptors.request.use(
   (config) => {
-    config.headers.Authorization = STORE.getState().user.token;
+    config.headers.Authorization = STORE.getState()?.auth?.user?.token;
     return config;
   },
   (error) => {

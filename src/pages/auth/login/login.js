@@ -36,6 +36,8 @@ const Login = ({navigation}) => {
         });
         dispatch(AuthJobs.saveUser(response?.data));
       } catch (error) {
+        console.log('HERE');
+        console.log(error);
         Work.showToast(error?.response?.data?.message);
       }
       setLoading(false);

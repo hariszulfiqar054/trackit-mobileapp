@@ -15,7 +15,7 @@ const Btn = ({containerStyle, labelStyle, label, onPress, isLoading}) => {
         {isLoading ? (
           <DotIndicator size={WP('3')} color={colors.white} />
         ) : (
-          <Text style={styles.label}>{label}</Text>
+          <Text style={[styles.label, labelStyle]}>{label}</Text>
         )}
       </View>
     </BtnWrapper>

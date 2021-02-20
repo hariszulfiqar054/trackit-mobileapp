@@ -1,24 +1,36 @@
-import React, {useEffect, useState, useCallback} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import React, {useEffect, useState, useCallback, useLayoutEffect} from 'react';
+import {StyleSheet, Text, View, FlatList} from 'react-native';
 import {
   Header,
   SafeWrapper,
   BtnWrapper,
   AnnouncementCard,
+  Btn,
 } from '../../../shared/components';
 import * as Work from '../../../shared/exporter';
 import Micon from 'react-native-vector-icons/MaterialIcons';
+import axios from 'axios';
+import {SkypeIndicator} from 'react-native-indicators';
+import {useIsFocused} from '@react-navigation/native';
+import moment from 'moment';
 
 const {
   WP,
+  HP,
   THEME: {colors},
 } = Work;
 const Announcement = ({navigation}) => {
+  const isFocused = useIsFocused();
   const [currDate, setCurrDate] = useState('');
   const [month, setMonth] = useState('');
   const [year, setYear] = useState('');
+  const [announcementData, setAnnouncementData] = useState([]);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
-  useEffect(() => {
+  const [isLoading, setLoading] = useState(false);
+
+  useLayoutEffect(() => {
     const result = getDate(Date.now(), 0);
     setCurrDate(
       Work.months[Number(result.month)] + ' ' + result.date + ' ' + result.year,
@@ -26,6 +38,52 @@ const Announcement = ({navigation}) => {
     setYear(result.year);
     setMonth(Number(result.month));
   }, []);
+
+  useEffect(() => {
+    getAnnouncements(page);
+  }, [page]);
+
+  const onRefresh = () => {
+    setPage(1);
+    getAnnouncements(1);
+  };
+  useEffect(() => {
+    setPage(1);
+    getAnnouncements(1);
+  }, [month]);
+
+  const getAnnouncements = async (p) => {
+    const isConnected = await Work.checkInternetConnection();
+    if (isConnected) {
+      try {
+        setLoading(true);
+        const response = await axios.post(
+          'announcements/getAnnouncmentByDate',
+          {
+            page: p,
+            month: month + 1,
+            year,
+          },
+        );
+        if (response?.data) {
+          if (page == 1) {
+            setAnnouncementData(response.data?.data);
+            setTotalPages(response.data?.total_pages);
+          } else {
+            setAnnouncementData([...announcementData, ...response.data?.data]);
+            setTotalPages(response.data?.total_pages);
+          }
+        }
+      } catch (error) {
+        Work.showToast(
+          error?.response?.data?.message ||
+            error?.response?.data?.data ||
+            Work.GENERAL_ERROR_MSG,
+        );
+      }
+      setLoading(false);
+    } else Work.showToast(Work.INTERNET_CONNECTION_ERROR);
+  };
 
   const getDate = (date, days) => {
     var result = new Date(date);
@@ -77,11 +135,37 @@ const Announcement = ({navigation}) => {
           </View>
         </BtnWrapper>
       </View>
-      <AnnouncementCard
-        city="Lahore"
-        message="A new announcement is posted"
-        date="12/3/2021"
-      />
+      {isLoading ? (
+        <SkypeIndicator color={colors.primary} size={WP('15')} />
+      ) : announcementData?.length > 0 ? (
+        <>
+          <FlatList
+            refreshing={isLoading}
+            onRefresh={onRefresh}
+            data={announcementData}
+            renderItem={({item}) => (
+              <AnnouncementCard
+                city={item?.city}
+                message={item?.text}
+                date={moment(item?.time_stamp).format('DD-MM-YYYY')}
+              />
+            )}
+            keyExtractor={(item) => item?._id}
+          />
+          {totalPages > page ? (
+            <Btn
+              label="Load More"
+              containerStyle={styles.btnContainer}
+              labelStyle={{fontSize: WP('3.7'), padding: WP('1')}}
+              onPress={() => setPage((pre) => pre + 1)}
+            />
+          ) : null}
+        </>
+      ) : (
+        <View style={{flex: 1, justifyContent: 'center'}}>
+          <Text style={styles.noData}>Oops! No Announcement</Text>
+        </View>
+      )}
     </SafeWrapper>
   );
 };
@@ -103,6 +187,14 @@ const styles = StyleSheet.create({
   },
   date: {
     color: '#51adcf',
+    textAlign: 'center',
+  },
+  btnContainer: {
+    marginVertical: WP('3'),
+  },
+  noData: {
+    fontSize: WP('5'),
+    fontWeight: 'bold',
     textAlign: 'center',
   },
 });
