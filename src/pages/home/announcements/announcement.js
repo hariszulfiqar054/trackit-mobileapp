@@ -40,7 +40,9 @@ const Announcement = ({navigation}) => {
   }, []);
 
   useEffect(() => {
-    getAnnouncements(page);
+    if (page > 1) {
+      getAnnouncements(page);
+    }
   }, [page]);
 
   const onRefresh = () => {
@@ -48,8 +50,10 @@ const Announcement = ({navigation}) => {
     getAnnouncements(1);
   };
   useEffect(() => {
-    setPage(1);
-    getAnnouncements(1);
+    if (month >= 0) {
+      setPage(1);
+      getAnnouncements(1);
+    }
   }, [month]);
 
   const getAnnouncements = async (p) => {
@@ -66,7 +70,7 @@ const Announcement = ({navigation}) => {
           },
         );
         if (response?.data) {
-          if (page == 1) {
+          if (p == 1) {
             setAnnouncementData(response.data?.data);
             setTotalPages(response.data?.total_pages);
           } else {

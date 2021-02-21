@@ -1,6 +1,7 @@
-import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
+import React, {useState, useEffect} from 'react';
+import {StyleSheet, Text, View, FlatList} from 'react-native';
+import {useSelector} from 'react-redux';
+import io from 'socket.io-client';
 import Ficon from 'react-native-vector-icons/FontAwesome';
 import {
   Header,
@@ -9,39 +10,124 @@ import {
   Textinput,
   BtnWrapper,
 } from '../../../shared/components';
+import axios from 'axios';
+import Env from '../../../env/env';
 import * as Work from '../../../shared/exporter';
 
 const {
   WP,
   THEME: {colors},
 } = Work;
+
+const socket = io(Env.SOCKET_URL);
 const Chat = ({navigation}) => {
+  const user = useSelector((state) => state?.auth?.user);
+  const [isLoading, setLoading] = useState(false);
+  const [msgs, setMessages] = useState([]);
+  const [page, setPage] = useState(1);
+  const [totalPage, setTotalPages] = useState(1);
+
+  useEffect(() => {
+    getMessages(1);
+  }, []);
+
+  useEffect(() => {
+    if (socket) {
+      socket.on('newMessage', ({message, userId, name}) => {
+        if (userId == user?.data?._id) {
+          console.log('from our side');
+          setMessages([
+            {_id: userId, id: 0, message, senderName: name, user: userId},
+            ...msgs,
+          ]);
+        } else
+          setMessages([
+            {id: userId, _id: userId, message, senderName: name, user: userId},
+            ...msgs,
+          ]);
+      });
+    }
+  }, [msgs]);
+  useEffect(() => {
+    if (socket) {
+      socket.emit('joinRoom', user?.data?.city);
+    }
+    return () => {
+      if (socket) return socket.emit('leaveRoom', user?.data?.city);
+    };
+  }, []);
+  const getMessages = async (p) => {
+    const isConnected = await Work.checkInternetConnection();
+    if (isConnected) {
+      setLoading(true);
+      try {
+        const response = await axios.get(
+          `chat/getChat?city=${user?.data?.city}&page=${p}&limit=10`,
+        );
+        if (response?.data) {
+          setTotalPages(response?.data?.total_pages);
+          if (page == 1) {
+            setMessages(response?.data?.data);
+          } else setMessages([...msgs, ...response?.data?.data]);
+        }
+      } catch (error) {
+        Work.showToast(
+          error?.response?.data?.message ||
+            error?.message ||
+            Work.GENERAL_ERROR_MSG,
+        );
+      }
+      setLoading(false);
+    } else Work.showToast(Work.INTERNET_CONNECTION_ERROR);
+  };
+
   return (
     <SafeWrapper>
-      <KeyboardAwareScrollView>
-        <Header label="Chat" drawer={navigation} />
-        <MessageComponent
-          message="hi my name is haris"
-          date={Date.now()}
-          sender
-        />
-        <View style={styles.msgContainer}>
-          <Textinput
-            placeholder="Type message..."
-            containerStyle={{width: '85%'}}
+      <Header label="Chat" drawer={navigation} />
+
+      <FlatList
+        inverted
+        keyboardShouldPersistTaps="always"
+        keyboardDismissMode="on-drag"
+        data={msgs}
+        renderItem={({item}) => (
+          <MessageComponent
+            message={item?.message}
+            date={item?.createdAt}
+            sender={
+              item?.user?._id == user?.data?._id ||
+              item?.user == user?.data?._id
+            }
           />
-          <BtnWrapper>
-            <View style={styles.sendBtnContainer}>
-              <Ficon
-                name="send"
-                size={WP('5')}
-                color={colors.white}
-                style={{padding: WP('3.4')}}
-              />
-            </View>
-          </BtnWrapper>
-        </View>
-      </KeyboardAwareScrollView>
+        )}
+        keyExtractor={(item) => item._id || item?.user}
+      />
+
+      <View style={styles.msgContainer}>
+        <Textinput
+          placeholder="Type message..."
+          containerStyle={{width: '85%'}}
+        />
+        <BtnWrapper
+          onPress={() => {
+            if (socket) {
+              socket.emit('chatRoomMessage', {
+                chatroom: user?.data?.city,
+                message: 'hello hell ',
+                userId: user?.data?._id,
+              });
+            }
+          }}>
+          <View style={styles.sendBtnContainer}>
+            <Ficon
+              name="send"
+              size={WP('5')}
+              color={colors.white}
+              style={{padding: WP('3.4')}}
+            />
+          </View>
+        </BtnWrapper>
+      </View>
     </SafeWrapper>
   );
 };
@@ -59,6 +145,8 @@ const styles = StyleSheet.create({
   msgContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginTop: WP('4'),
     // position: 'absolute',
+    // bottom: 0,
   },
 });
