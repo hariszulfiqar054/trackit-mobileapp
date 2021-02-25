@@ -26,6 +26,7 @@ const Chat = ({navigation}) => {
   const [msgs, setMessages] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPages] = useState(1);
+  const [typeMsg, setTypeMessage] = useState('');
 
   useEffect(() => {
     getMessages(1);
@@ -56,6 +57,23 @@ const Chat = ({navigation}) => {
       if (socket) return socket.emit('leaveRoom', user?.data?.city);
     };
   }, []);
+
+  const handleMsg = () => {
+    if (typeMsg.length > 0) {
+      if (socket) {
+        socket.emit('chatRoomMessage', {
+          chatroom: user?.data?.city,
+          message: typeMsg,
+          userId: user?.data?._id,
+        });
+        setTypeMessage('');
+      }
+    } else {
+      Work.showToast('Type Message');
+      return;
+    }
+  };
+
   const getMessages = async (p) => {
     const isConnected = await Work.checkInternetConnection();
     if (isConnected) {
@@ -100,24 +118,20 @@ const Chat = ({navigation}) => {
             }
           />
         )}
-        keyExtractor={(item) => item._id || item?.user}
+        keyExtractor={(item) =>
+          item._id + (Math.random() * 1000) / (Math.random() * 1.2) ||
+          item?.user + (Math.random() * 2000) / (Math.random() * 1.2)
+        }
       />
 
       <View style={styles.msgContainer}>
         <Textinput
           placeholder="Type message..."
           containerStyle={{width: '85%'}}
+          onChangeText={(t) => setTypeMessage(t)}
+          value={typeMsg}
         />
-        <BtnWrapper
-          onPress={() => {
-            if (socket) {
-              socket.emit('chatRoomMessage', {
-                chatroom: user?.data?.city,
-                message: 'hello hell ',
-                userId: user?.data?._id,
-              });
-            }
-          }}>
+        <BtnWrapper onPress={handleMsg}>
           <View style={styles.sendBtnContainer}>
             <Ficon
               name="send"
