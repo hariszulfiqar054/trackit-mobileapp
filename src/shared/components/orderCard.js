@@ -8,10 +8,24 @@ const {
   WP,
   THEME: {colors},
 } = Work;
-const OrderCard = ({onPress, orderId, shop, date, amount}) => {
+const OrderCard = ({onPress, orderId, shop, date, amount, status}) => {
   return (
     <BtnWrapper>
       <View style={styles.container}>
+        <View style={styles.statusContainer}>
+          <Text style={styles.order}>Status:</Text>
+          <Text
+            style={{
+              color:
+                status == 'pending'
+                  ? '#da723c'
+                  : status == 'completed'
+                  ? '#00af91'
+                  : '#fa1e0e',
+            }}>
+            {status}
+          </Text>
+        </View>
         <Text style={styles.order}>
           <Text style={{fontWeight: 'bold'}}>Order No.</Text>
           <Text>{orderId}</Text>
@@ -27,8 +41,8 @@ const OrderCard = ({onPress, orderId, shop, date, amount}) => {
             <Text>{moment(date).format('DD-MM-YYYY')}</Text>
           </Text>
           <Text style={styles.order}>
-            <Text style={{fontWeight: 'bold'}}>Amount : </Text>
-            <Text>{amount?.toFixed(2)}</Text>
+            <Text style={{fontWeight: 'bold'}}>Items : </Text>
+            <Text>{amount}</Text>
           </Text>
         </View>
       </View>
@@ -46,6 +60,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     borderRadius: 7,
     marginTop: WP('4'),
+    position: 'relative',
   },
   order: {
     color: colors.grey,
@@ -54,6 +69,12 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  statusContainer: {
+    position: 'absolute',
+    right: '5%',
+    flexDirection: 'row',
     alignItems: 'center',
   },
 });
