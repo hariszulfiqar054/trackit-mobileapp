@@ -13,6 +13,7 @@ import {
 import axios from 'axios';
 import Env from '../../../env/env';
 import * as Work from '../../../shared/exporter';
+import {SkypeIndicator} from 'react-native-indicators';
 
 const {
   WP,
@@ -102,27 +103,30 @@ const Chat = ({navigation}) => {
   return (
     <SafeWrapper>
       <Header label="Chat" drawer={navigation} />
-
-      <FlatList
-        inverted
-        keyboardShouldPersistTaps="always"
-        keyboardDismissMode="on-drag"
-        data={msgs}
-        renderItem={({item}) => (
-          <MessageComponent
-            message={item?.message}
-            date={item?.createdAt}
-            sender={
-              item?.user?._id == user?.data?._id ||
-              item?.user == user?.data?._id
-            }
-          />
-        )}
-        keyExtractor={(item) =>
-          item._id + (Math.random() * 1000) / (Math.random() * 1.2) ||
-          item?.user + (Math.random() * 2000) / (Math.random() * 1.2)
-        }
-      />
+      {isLoading ? (
+        <SkypeIndicator color={colors.primary} />
+      ) : (
+        <FlatList
+          inverted
+          keyboardShouldPersistTaps="always"
+          keyboardDismissMode="on-drag"
+          data={msgs}
+          renderItem={({item}) => (
+            <MessageComponent
+              message={item?.message}
+              date={item?.createdAt}
+              sender={
+                item?.user?._id == user?.data?._id ||
+                item?.user == user?.data?._id
+              }
+            />
+          )}
+          keyExtractor={(item) =>
+            item._id + (Math.random() * 1000) / (Math.random() * 1.2) ||
+            item?.user + (Math.random() * 2000) / (Math.random() * 1.2)
+          }
+        />
+      )}
 
       <View style={styles.msgContainer}>
         <Textinput
