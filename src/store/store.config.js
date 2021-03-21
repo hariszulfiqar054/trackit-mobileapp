@@ -4,6 +4,7 @@ import promise from 'redux-promise-middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {persistStore, persistReducer} from 'redux-persist';
 import authReducer from './reducer/auth.reducer';
+import CartReducer from './reducer/cart.reducer';
 import Env from '../env/env';
 import axios from 'axios';
 
@@ -22,6 +23,7 @@ axios.interceptors.request.use(
 // Redux Configuration
 const rootReducer = combineReducers({
   auth: authReducer,
+  cart: CartReducer,
 });
 
 const persistConfig = {

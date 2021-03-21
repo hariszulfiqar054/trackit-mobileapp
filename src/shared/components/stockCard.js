@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     borderColor: colors.lightGrey,
     position: 'relative',
+    marginTop: WP('5'),
   },
   img: {
     width: WP('23'),

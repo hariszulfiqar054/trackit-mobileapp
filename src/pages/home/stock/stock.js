@@ -1,19 +1,66 @@
-import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {StyleSheet, Text, View, FlatList} from 'react-native';
 import {
   Header,
   SafeWrapper,
   Textinput,
   StockCard,
+  Btn,
 } from '../../../shared/components';
 import * as Work from '../../../shared/exporter';
 import Aicon from 'react-native-vector-icons/AntDesign';
+import axios from 'axios';
+import {SkypeIndicator} from 'react-native-indicators';
+import {useDispatch, useSelector} from 'react-redux';
+import {addToCart} from '../../../store/actions/cart.action';
 
 const {
   WP,
   THEME: {colors},
 } = Work;
 const Stock = ({navigation}) => {
+  const cart = useSelector((state) => state?.cart?.cartItems);
+
+  const dispatch = useDispatch();
+
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [isLoading, setLoading] = useState(false);
+  const [stocks, setStocks] = useState([]);
+
+  useEffect(() => {
+    getStocks();
+  }, [page]);
+
+  const onRefresh = () => {
+    setStocks([]);
+    setPage(1);
+    getStocks();
+  };
+
+  const getStocks = async () => {
+    const isConnected = Work.checkInternetConnection();
+    if (isConnected) {
+      setLoading(true);
+      try {
+        const response = await axios.get(
+          `stocks/allStocks?page=${page}&limit=5`,
+        );
+        if (response?.data) {
+          if (page == 1) {
+            setStocks(response?.data?.data);
+            setTotalPages(response?.data?.total_pages);
+          } else {
+            setStocks([...stocks, ...response?.data?.data]);
+            setTotalPages(response?.data?.total_pages);
+          }
+        }
+      } catch (error) {
+        Work.showToast(error?.response?.data?.message || error?.message);
+      }
+      setLoading(false);
+    } else Work.showToast(Work.INTERNET_CONNECTION_ERROR);
+  };
   return (
     <SafeWrapper>
       <Header label="Stocks" drawer={navigation} />
@@ -28,16 +75,53 @@ const Stock = ({navigation}) => {
           />
         }
       />
-      <StockCard
-        price="240"
-        qty="20"
-        name="Brake Shoe"
-        img="https://sribu-sg.s3.amazonaws.com/assets/media/contest_detail/2019/1/packaging-design-for-ms-brake-pads-amp-brake-shoes-5c3eaa219d68b12cbadadea6/fc41e00d64.jpg"
-      />
+      {isLoading ? (
+        <SkypeIndicator color={colors.primary} />
+      ) : (
+        <>
+          <FlatList
+            onRefresh={onRefresh}
+            refreshing={isLoading}
+            // refreshControl={}
+            data={stocks}
+            renderItem={({item}) => (
+              <StockCard
+                price={item?.price}
+                qty={item?.quantity}
+                name={item?.item_name}
+                img={item?.img}
+                onPress={() => {
+                  const check = cart?.findIndex(
+                    (data) => data?._id === item?._id,
+                  );
+
+                  if (check < 0) {
+                    dispatch(addToCart(item));
+                    Work.showToast('Item Added To Cart');
+                  } else Work.showToast('Item Already Exist In Cart');
+                }}
+              />
+            )}
+            keyExtractor={(item) => item?._id}
+          />
+          {totalPages > page ? (
+            <Btn
+              label="Load More"
+              containerStyle={styles.btnContainer}
+              labelStyle={{fontSize: WP('3.7'), padding: WP('1')}}
+              onPress={() => setPage((pre) => pre + 1)}
+            />
+          ) : null}
+        </>
+      )}
     </SafeWrapper>
   );
 };
 
 export default Stock;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  btnContainer: {
+    marginVertical: WP('3'),
+  },
+});
