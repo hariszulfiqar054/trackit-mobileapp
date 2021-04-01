@@ -12,6 +12,34 @@ const CartReducer = (state = initialState, action) => {
         cartItems: state.cartItems.concat(action?.payload),
       };
     }
+    case Types.ITEM_INC: {
+      state.cartItems[action?.payload].orderQty =
+        (state.cartItems[action?.payload]?.orderQty || 1) + 1;
+
+      return {
+        ...state,
+        cartItems: [...state.cartItems],
+      };
+    }
+
+    case Types.ITEM_DEC: {
+      if (state.cartItems[action?.payload].orderQty > 1)
+        state.cartItems[action?.payload].orderQty =
+          (state.cartItems[action?.payload]?.orderQty || 1) - 1;
+      return {
+        ...state,
+        cartItems: [...state.cartItems],
+      };
+    }
+    case Types.ITEM_REMOVE: {
+      const filteredArray = state.cartItems.filter(
+        (data) => data?._id !== action?.payload,
+      );
+      return {
+        ...state,
+        cartItems: [...filteredArray],
+      };
+    }
 
     default: {
       return {

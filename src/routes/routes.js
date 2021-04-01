@@ -1,7 +1,7 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {Login, Cart, Profile} from '../pages/index';
+import {Login, Cart, Profile, ShopInfo, OrderSuccess} from '../pages/index';
 import Dashboard from '../shared/navigator/drawerNavigator';
 import {useSelector} from 'react-redux';
 
@@ -33,6 +33,16 @@ const Routes = () => {
             <Stack.Screen
               name="profile"
               component={Profile}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="shopInfo"
+              component={ShopInfo}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="orderSuccess"
+              component={OrderSuccess}
               options={{headerShown: false}}
             />
           </>

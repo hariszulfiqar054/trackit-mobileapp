@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     borderColor: colors.lightGrey,
     position: 'relative',
+    marginTop: WP('4'),
   },
   img: {
     width: WP('23'),

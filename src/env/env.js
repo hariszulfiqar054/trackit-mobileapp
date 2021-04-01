@@ -1,4 +1,4 @@
 module.exports = {
-  BASE_URL: 'https://e89dd7f7fa5a.ngrok.io/api/',
-  SOCKET_URL: 'https://e89dd7f7fa5a.ngrok.io',
+  BASE_URL: 'https://e69990f14d9f.ngrok.io/api/',
+  SOCKET_URL: 'https://e69990f14d9f.ngrok.io',
 };

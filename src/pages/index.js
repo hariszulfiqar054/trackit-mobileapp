@@ -6,3 +6,5 @@ export {default as Order} from './home/order/order';
 export {default as Setting} from './home/setting/setting';
 export {default as Stock} from './home/stock/stock';
 export {default as Cart} from './home/cart/cart';
+export {default as ShopInfo} from './home/shopInfo/shopInfo';
+export {default as OrderSuccess} from './home/orderSuccess/orderSuccess';

@@ -6,3 +6,24 @@ export const addToCart = (payload) => {
     payload,
   };
 };
+
+export const itemInc = (payload) => {
+  return {
+    type: Types.ITEM_INC,
+    payload,
+  };
+};
+
+export const itemDec = (payload) => {
+  return {
+    type: Types.ITEM_DEC,
+    payload,
+  };
+};
+
+export const itemRemove = (payload) => {
+  return {
+    type: Types.ITEM_REMOVE,
+    payload,
+  };
+};
