@@ -8,3 +8,4 @@ export {default as Stock} from './home/stock/stock';
 export {default as Cart} from './home/cart/cart';
 export {default as ShopInfo} from './home/shopInfo/shopInfo';
 export {default as OrderSuccess} from './home/orderSuccess/orderSuccess';
+export {default as OrderDetail} from './home/orderDetails/orderDetail';

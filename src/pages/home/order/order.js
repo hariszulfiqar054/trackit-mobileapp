@@ -68,6 +68,7 @@ const Order = ({navigation}) => {
                 shop={item?.shopName || 'NO Shop Name'}
                 orderId={item?._id?.substring(0, 10)}
                 status={item?.status}
+                onPress={() => navigation.navigate('orderDetail')}
               />
             )}
             keyExtractor={(item) => item?._id}

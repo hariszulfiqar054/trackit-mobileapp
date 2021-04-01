@@ -10,7 +10,7 @@ const {
 } = Work;
 const OrderCard = ({onPress, orderId, shop, date, amount, status}) => {
   return (
-    <BtnWrapper>
+    <BtnWrapper onPress={onPress}>
       <View style={styles.container}>
         <View style={styles.statusContainer}>
           <Text style={styles.order}>Status:</Text>
