@@ -27,3 +27,9 @@ export const itemRemove = (payload) => {
     payload,
   };
 };
+
+export const emptyCart = () => {
+  return {
+    type: Types.EMPTY_CART,
+  };
+};

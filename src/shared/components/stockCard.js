@@ -17,18 +17,20 @@ const StockCard = ({img, price, qty, onPress, name}) => {
         <Text style={styles.price}>Rs. {price}</Text>
         <Text style={styles.price}>Qty: {qty}</Text>
       </View>
-      <BtnWrapper onPress={onPress}>
-        <View style={styles.btnContainer}>
-          <Eicon name="cart" color={colors.white} size={WP('5')} />
-          <Text
-            style={{
-              color: colors.white,
-              fontSize: WP('3.8'),
-            }}>
-            Add to cart
-          </Text>
-        </View>
-      </BtnWrapper>
+      {onPress ? (
+        <BtnWrapper onPress={onPress}>
+          <View style={styles.btnContainer}>
+            <Eicon name="cart" color={colors.white} size={WP('5')} />
+            <Text
+              style={{
+                color: colors.white,
+                fontSize: WP('3.8'),
+              }}>
+              Add to cart
+            </Text>
+          </View>
+        </BtnWrapper>
+      ) : null}
     </View>
   );
 };

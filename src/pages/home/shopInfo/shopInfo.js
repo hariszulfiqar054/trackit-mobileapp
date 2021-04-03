@@ -12,8 +12,9 @@ import Micon from 'react-native-vector-icons/MaterialIcons';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import axios from 'axios';
+import {emptyCart} from '../../../store/actions/cart.action';
 
 const {
   WP,
@@ -23,6 +24,8 @@ const ShopInfo = ({navigation}) => {
   const [isLoading, setLoading] = useState(false);
   const cart = useSelector((state) => state?.cart?.cartItems);
   const user = useSelector((state) => state?.auth?.user);
+
+  const dispatch = useDispatch();
 
   const placeOrder = async (value) => {
     const isConnected = Work.checkInternetConnection();
@@ -39,6 +42,7 @@ const ShopInfo = ({navigation}) => {
           shopName: value?.shopName,
         });
         if (response?.data) {
+          dispatch(emptyCart());
           Work.showToast('Order Placed Successfully');
           navigation.navigate('orderSuccess');
         }

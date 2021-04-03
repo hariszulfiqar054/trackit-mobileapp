@@ -4,4 +4,5 @@ module.exports = {
   ITEM_INC: 'ITEM_INC',
   ITEM_DEC: 'ITEM_DEC',
   ITEM_REMOVE: 'ITEM_REMOVE',
+  EMPTY_CART: 'EMPTY_CART',
 };

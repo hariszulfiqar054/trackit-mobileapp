@@ -82,7 +82,6 @@ const Stock = ({navigation}) => {
           <FlatList
             onRefresh={onRefresh}
             refreshing={isLoading}
-            // refreshControl={}
             data={stocks}
             renderItem={({item}) => (
               <StockCard
@@ -96,7 +95,7 @@ const Stock = ({navigation}) => {
                   );
 
                   if (check < 0) {
-                    dispatch(addToCart(item));
+                    dispatch(addToCart({...item, orderQty: 1}));
                     Work.showToast('Item Added To Cart');
                   } else Work.showToast('Item Already Exist In Cart');
                 }}

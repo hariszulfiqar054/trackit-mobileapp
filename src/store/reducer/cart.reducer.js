@@ -40,6 +40,12 @@ const CartReducer = (state = initialState, action) => {
         cartItems: [...filteredArray],
       };
     }
+    case Types.EMPTY_CART: {
+      return {
+        ...state,
+        cart: [],
+      };
+    }
 
     default: {
       return {
