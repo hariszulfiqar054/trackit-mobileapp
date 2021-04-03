@@ -28,6 +28,8 @@ const Stock = ({navigation}) => {
   const [isLoading, setLoading] = useState(false);
   const [stocks, setStocks] = useState([]);
 
+  const [filteredStock, setFilterdStock] = useState([]);
+
   useEffect(() => {
     getStocks();
   }, [page]);
@@ -36,6 +38,18 @@ const Stock = ({navigation}) => {
     setStocks([]);
     setPage(1);
     getStocks();
+  };
+
+  const onSearch = (search) => {
+    if (search.length === 0) {
+      setFilterdStock(stocks);
+    } else {
+      setFilterdStock(
+        stocks.filter((name) =>
+          name?.item_name?.toLowerCase().includes(search?.toLowerCase()),
+        ),
+      );
+    }
   };
 
   const getStocks = async () => {
@@ -50,9 +64,11 @@ const Stock = ({navigation}) => {
           if (page == 1) {
             setStocks(response?.data?.data);
             setTotalPages(response?.data?.total_pages);
+            setFilterdStock(response?.data?.data);
           } else {
             setStocks([...stocks, ...response?.data?.data]);
             setTotalPages(response?.data?.total_pages);
+            setFilterdStock([...stocks, ...response?.data?.data]);
           }
         }
       } catch (error) {
@@ -65,6 +81,7 @@ const Stock = ({navigation}) => {
     <SafeWrapper>
       <Header label="Stocks" drawer={navigation} />
       <Textinput
+        onChangeText={(t) => onSearch(t)}
         placeholder="Search items ...."
         leftIcon={
           <Aicon
@@ -82,7 +99,7 @@ const Stock = ({navigation}) => {
           <FlatList
             onRefresh={onRefresh}
             refreshing={isLoading}
-            data={stocks}
+            data={filteredStock}
             renderItem={({item}) => (
               <StockCard
                 price={item?.price}
