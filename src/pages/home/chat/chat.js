@@ -37,7 +37,6 @@ const Chat = ({navigation}) => {
     if (socket) {
       socket.on('newMessage', ({message, userId, name}) => {
         if (userId == user?.data?._id) {
-          console.log('from our side');
           setMessages([
             {_id: userId, id: 0, message, senderName: name, user: userId},
             ...msgs,

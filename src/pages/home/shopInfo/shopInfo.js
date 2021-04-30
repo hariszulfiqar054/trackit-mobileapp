@@ -34,7 +34,7 @@ const ShopInfo = ({navigation}) => {
       try {
         const response = await axios.post('order/placeOrder', {
           item: cart,
-          orderTakenBy: user.data._id,
+          orderTakenBy: user?.data?._id,
           city: user?.data?.city,
           shopAddress: value?.shopAddress,
           shopOwnerContact: value?.shopContact,

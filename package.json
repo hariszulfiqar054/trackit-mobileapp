@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.13.4",
+    "@react-native-community/geolocation": "^2.0.2",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-native-community/netinfo": "^5.9.10",
     "@react-navigation/bottom-tabs": "^5.11.7",
@@ -24,7 +25,9 @@
     "npm": "^7.5.2",
     "react": "16.13.1",
     "react-native": "0.63.4",
+    "react-native-android-location-enabler": "^1.2.2",
     "react-native-elements": "^3.1.0",
+    "react-native-geolocation-service": "^5.2.0",
     "react-native-gesture-handler": "^1.9.0",
     "react-native-indicators": "^0.17.0",
     "react-native-keyboard-aware-scrollview": "^2.1.0",
