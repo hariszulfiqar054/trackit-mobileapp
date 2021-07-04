@@ -1,5 +1,5 @@
-import React, {useMemo} from 'react';
-import {StyleSheet, Text, View, FlatList} from 'react-native';
+import React, { useMemo } from 'react';
+import { StyleSheet, Text, View, FlatList } from 'react-native';
 import * as Work from '../../../shared/exporter';
 import {
   SafeWrapper,
@@ -8,14 +8,18 @@ import {
   Btn,
 } from '../../../shared/components/index';
 import Micon from 'react-native-vector-icons/MaterialIcons';
-import {useSelector, useDispatch} from 'react-redux';
-import {itemDec, itemInc, itemRemove} from '../../../store/actions/cart.action';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  itemDec,
+  itemInc,
+  itemRemove,
+} from '../../../store/actions/cart.action';
 
 const {
   WP,
-  THEME: {colors},
+  THEME: { colors },
 } = Work;
-const Cart = ({navigation}) => {
+const Cart = ({ navigation }) => {
   const cart = useSelector((state) => state?.cart?.cartItems);
   const [total, setTotal] = React.useState(0);
 
@@ -35,30 +39,31 @@ const Cart = ({navigation}) => {
         <BtnWrapper onPress={() => navigation.goBack()}>
           <View style={styles.btnWrapper}>
             <Micon
-              style={{padding: WP('0.6')}}
+              style={{ padding: WP('0.6') }}
               name="keyboard-arrow-left"
               size={WP('9')}
               color={colors.white}
             />
           </View>
         </BtnWrapper>
-        <View style={{flex: 0.8, alignItems: 'center'}}>
+        <View style={{ flex: 0.8, alignItems: 'center' }}>
           <Text style={styles.label}>Cart</Text>
         </View>
       </View>
       {cart?.length === 0 ? (
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-          <Text style={{fontWeight: 'bold', fontSize: WP('5')}}>
+        <View
+          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <Text style={{ fontWeight: 'bold', fontSize: WP('5') }}>
             No Item In Cart Right Now!
           </Text>
         </View>
       ) : (
         <>
-          <View style={{height: Work.HP('65'), marginTop: WP('2')}}>
+          <View style={{ height: Work.HP('65'), marginTop: WP('2') }}>
             <FlatList
               showsVerticalScrollIndicator={false}
               data={cart}
-              renderItem={({item, index}) => (
+              renderItem={({ item, index }) => (
                 <CartCard
                   name={item?.item_name}
                   price={item?.price}
@@ -71,7 +76,9 @@ const Cart = ({navigation}) => {
                   onPressInc={() => {
                     if (item?.orderQty >= item?.quantity) {
                       Work.showToast('Limited Stock');
-                    } else dispatch(itemInc(index));
+                    } else {
+                      dispatch(itemInc(index));
+                    }
                   }}
                   onPressDec={() => dispatch(itemDec(index))}
                 />
@@ -80,10 +87,10 @@ const Cart = ({navigation}) => {
             />
           </View>
           <View>
-            <Text style={[styles.label, {paddingStart: WP('4')}]}>
+            <Text style={[styles.label, { paddingStart: WP('4') }]}>
               Order Info
             </Text>
-            <View style={{flexDirection: 'row'}}>
+            <View style={{ flexDirection: 'row' }}>
               <Text
                 style={[
                   styles.label,
@@ -98,7 +105,7 @@ const Cart = ({navigation}) => {
               <Text
                 style={[
                   styles.label,
-                  {paddingStart: WP('1'), paddingTop: WP('4')},
+                  { paddingStart: WP('1'), paddingTop: WP('4') },
                 ]}>
                 {total}
               </Text>
@@ -106,7 +113,7 @@ const Cart = ({navigation}) => {
             <Btn
               onPress={() => navigation.navigate('shopInfo')}
               label="Proceed to Checkout"
-              containerStyle={{marginTop: WP('7'), marginBottom: WP('5')}}
+              containerStyle={{ marginTop: WP('7'), marginBottom: WP('5') }}
             />
           </View>
         </>

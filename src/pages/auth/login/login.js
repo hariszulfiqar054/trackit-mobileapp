@@ -1,31 +1,31 @@
-import React, {useState} from 'react';
-import {StyleSheet, Text, View, Image} from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, Image } from 'react-native';
 import {
   SafeWrapper,
   Btn,
   Textinput,
   BtnWrapper,
 } from '../../../shared/components';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import Eicon from 'react-native-vector-icons/Entypo';
 import * as Work from '../../../shared/exporter';
-import {Formik} from 'formik';
+import { Formik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import * as AuthJobs from '../../../store/actions/auth.action';
 
 const {
   WP,
   HP,
-  THEME: {colors},
+  THEME: { colors },
 } = Work;
-const Login = ({navigation}) => {
+const Login = ({ navigation }) => {
   const [showPassword, setShowPassword] = useState(true);
   const [isLoading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
-  const loginHandler = async ({phone, password}) => {
+  const loginHandler = async ({ phone, password }) => {
     const isConnected = await Work.checkInternetConnection();
     if (isConnected) {
       setLoading(true);
@@ -46,7 +46,7 @@ const Login = ({navigation}) => {
 
   return (
     <KeyboardAwareScrollView keyboardShouldPersistTaps={'handled'}>
-      <SafeWrapper style={{backgroundColor: '#666F88'}}>
+      <SafeWrapper style={{ backgroundColor: '#666F88' }}>
         <Text style={styles.welcome}>Welcome</Text>
         <Text style={styles.heading}>Please Sign in to continue!</Text>
         <Formik
@@ -101,7 +101,7 @@ const Login = ({navigation}) => {
                       <Eicon
                         name="eye"
                         size={WP('5')}
-                        style={{marginEnd: WP('3')}}
+                        style={{ marginEnd: WP('3') }}
                         color={colors.lightGrey}
                       />
                     </BtnWrapper>
@@ -110,19 +110,17 @@ const Login = ({navigation}) => {
                       <Eicon
                         name="eye-with-line"
                         size={WP('5')}
-                        style={{marginEnd: WP('3')}}
+                        style={{ marginEnd: WP('3') }}
                         color={colors.lightGrey}
                       />
                     </BtnWrapper>
                   )
                 }
               />
-              <BtnWrapper>
-                <Text style={styles.forgetPassword}>Forget Password?</Text>
-              </BtnWrapper>
+
               <Btn
                 label="Login"
-                containerStyle={{marginTop: HP('14'), marginBottom: WP('5')}}
+                containerStyle={{ marginTop: HP('14'), marginBottom: WP('5') }}
                 onPress={isLoading ? null : handleSubmit}
                 isLoading={isLoading}
               />

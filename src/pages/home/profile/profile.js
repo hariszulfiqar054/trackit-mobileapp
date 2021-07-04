@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View, ImageBackground, Image} from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, Image } from 'react-native';
 import {
   SafeWrapper,
   BtnWrapper,
@@ -8,14 +8,16 @@ import {
 } from '../../../shared/components';
 import * as Work from '../../../shared/exporter';
 import Micon from 'react-native-vector-icons/MaterialIcons';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
+import { useSelector } from 'react-redux';
 
 const {
   WP,
   HP,
-  THEME: {colors},
+  THEME: { colors },
 } = Work;
-const Profile = ({navigation}) => {
+const Profile = ({ navigation }) => {
+  const user = useSelector((state) => state?.auth?.user);
   return (
     <SafeWrapper>
       <KeyboardAwareScrollView>
@@ -45,19 +47,15 @@ const Profile = ({navigation}) => {
           </BtnWrapper>
         </ImageBackground>
         <View style={styles.fieldsContainer}>
-          <Textinput label="Name" placeholder="Enter Name.." />
+          <Textinput label="Name" disabled value={user?.data?.name} />
           <Textinput
             label="Phone no."
-            placeholder="Enter Phone no..."
             keyboardType="phone-pad"
+            disabled
+            value={user?.data?.contact}
           />
-          <Textinput
-            label="Password"
-            placeholder="Enter Password..."
-            secureTextEntry
-          />
+          <Textinput label="Password" value={user?.data?.password} disabled />
         </View>
-        <Btn label="Update" containerStyle={{marginBottom: WP('5')}} />
       </KeyboardAwareScrollView>
     </SafeWrapper>
   );

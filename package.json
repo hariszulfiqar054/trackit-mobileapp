@@ -26,6 +26,7 @@
     "react": "16.13.1",
     "react-native": "0.63.4",
     "react-native-android-location-enabler": "^1.2.2",
+    "react-native-chart-kit": "^6.11.0",
     "react-native-elements": "^3.1.0",
     "react-native-geolocation-service": "^5.2.0",
     "react-native-gesture-handler": "^1.9.0",
@@ -35,6 +36,7 @@
     "react-native-reanimated": "^1.13.2",
     "react-native-safe-area-context": "^3.1.9",
     "react-native-screens": "^2.17.1",
+    "react-native-svg": "^12.1.1",
     "react-native-tiny-toast": "^1.0.7",
     "react-native-vector-icons": "^8.0.0",
     "react-redux": "^7.2.2",
@@ -43,6 +45,7 @@
     "redux-promise-middleware": "^6.1.2",
     "redux-thunk": "^2.3.0",
     "socket.io-client": "^3.1.1",
+    "twilio": "^3.61.0",
     "yup": "^0.32.8"
   },
   "devDependencies": {

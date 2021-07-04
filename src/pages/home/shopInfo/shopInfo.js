@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {StyleSheet, Text, View, Alert} from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, Alert } from 'react-native';
 import * as Work from '../../../shared/exporter';
 import {
   SafeWrapper,
@@ -9,18 +9,18 @@ import {
   Textinput,
 } from '../../../shared/components/index';
 import Micon from 'react-native-vector-icons/MaterialIcons';
-import {Formik} from 'formik';
+import { Formik } from 'formik';
 import * as Yup from 'yup';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
-import {useSelector, useDispatch} from 'react-redux';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
+import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
-import {emptyCart} from '../../../store/actions/cart.action';
+import { emptyCart } from '../../../store/actions/cart.action';
 
 const {
   WP,
-  THEME: {colors},
+  THEME: { colors },
 } = Work;
-const ShopInfo = ({navigation}) => {
+const ShopInfo = ({ navigation }) => {
   const [isLoading, setLoading] = useState(false);
   const cart = useSelector((state) => state?.cart?.cartItems);
   const user = useSelector((state) => state?.auth?.user);
@@ -49,8 +49,8 @@ const ShopInfo = ({navigation}) => {
       } catch (error) {
         Work.showToast(
           error?.response?.data?.message ||
-            error?.message ||
-            Work.GENERAL_ERROR_MSG,
+          error?.message ||
+          Work.GENERAL_ERROR_MSG,
         );
       }
       setLoading(false);
@@ -64,14 +64,14 @@ const ShopInfo = ({navigation}) => {
           <BtnWrapper onPress={() => navigation.goBack()}>
             <View style={styles.btnWrapper}>
               <Micon
-                style={{padding: WP('0.6')}}
+                style={{ padding: WP('0.6') }}
                 name="keyboard-arrow-left"
                 size={WP('9')}
                 color={colors.white}
               />
             </View>
           </BtnWrapper>
-          <View style={{flex: 0.8, alignItems: 'center'}}>
+          <View style={{ flex: 0.8, alignItems: 'center' }}>
             <Text style={styles.label}>Shop Information</Text>
           </View>
         </View>
@@ -99,7 +99,7 @@ const ShopInfo = ({navigation}) => {
                     onPress: () => console.log('Cancel Pressed'),
                     style: 'cancel',
                   },
-                  {text: 'OK', onPress: () => placeOrder(values)},
+                  { text: 'OK', onPress: () => placeOrder(values) },
                 ],
               );
             } else Work.showToast('Enter the valid contact');
@@ -112,7 +112,7 @@ const ShopInfo = ({navigation}) => {
             touched,
             values,
           }) => (
-            <View style={{marginTop: WP('8')}}>
+            <View style={{ marginTop: WP('8') }}>
               <Textinput
                 label="Shop Name"
                 placeholder="Enter Shop Name..."
@@ -162,7 +162,7 @@ const ShopInfo = ({navigation}) => {
               />
               <Btn
                 label="Place Order"
-                containerStyle={{marginBottom: WP('5'), marginTop: WP('30')}}
+                containerStyle={{ marginBottom: WP('5'), marginTop: WP('30') }}
                 onPress={isLoading ? null : handleSubmit}
                 isLoading={isLoading}
               />

@@ -1,7 +1,7 @@
-import React, {useEffect, useRef} from 'react';
-import {Text, StyleSheet, PermissionsAndroid} from 'react-native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {Announcement, Chat, Order, Stock} from '../../pages/index';
+import React, { useEffect, useRef } from 'react';
+import { Text, StyleSheet, PermissionsAndroid } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Announcement, Chat, Order, Stock } from '../../pages/index';
 import * as Work from '../exporter';
 import Eicon from 'react-native-vector-icons/Entypo';
 import Mcicon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -10,12 +10,12 @@ import RNAndroidLocationEnabler from 'react-native-android-location-enabler';
 import Geolocation from 'react-native-geolocation-service';
 import io from 'socket.io-client';
 import Env from '../../env/env';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const Tab = createBottomTabNavigator();
 const {
   WP,
-  THEME: {colors},
+  THEME: { colors },
 } = Work;
 const socket = io(Env.SOCKET_URL);
 const BottomNavigator = () => {
@@ -66,7 +66,7 @@ const BottomNavigator = () => {
           }
         },
         (err) => {},
-        {enableHighAccuracy: true, interval: 5000},
+        { enableHighAccuracy: true, interval: 5000 },
       );
     } catch (error) {}
   };
@@ -97,18 +97,18 @@ const BottomNavigator = () => {
         name="Stock"
         component={Stock}
         options={{
-          tabBarIcon: ({focused}) => (
+          tabBarIcon: ({ focused }) => (
             <Eicon
               name="list"
               size={WP('5')}
               color={focused ? colors.primary : colors.lightGrey}
             />
           ),
-          tabBarLabel: ({focused}) => (
+          tabBarLabel: ({ focused }) => (
             <Text
               style={[
                 styles.txt,
-                {color: focused ? colors.primary : colors.lightGrey},
+                { color: focused ? colors.primary : colors.lightGrey },
               ]}>
               Stock
             </Text>
@@ -119,18 +119,18 @@ const BottomNavigator = () => {
         name="Order"
         component={Order}
         options={{
-          tabBarIcon: ({focused}) => (
+          tabBarIcon: ({ focused }) => (
             <Mcicon
               name="clipboard-list"
               size={WP('5')}
               color={focused ? colors.primary : colors.lightGrey}
             />
           ),
-          tabBarLabel: ({focused}) => (
+          tabBarLabel: ({ focused }) => (
             <Text
               style={[
                 styles.txt,
-                {color: focused ? colors.primary : colors.lightGrey},
+                { color: focused ? colors.primary : colors.lightGrey },
               ]}>
               Order
             </Text>
@@ -141,18 +141,18 @@ const BottomNavigator = () => {
         name="Chat"
         component={Chat}
         options={{
-          tabBarIcon: ({focused}) => (
+          tabBarIcon: ({ focused }) => (
             <Eicon
               name="chat"
               size={WP('5')}
               color={focused ? colors.primary : colors.lightGrey}
             />
           ),
-          tabBarLabel: ({focused}) => (
+          tabBarLabel: ({ focused }) => (
             <Text
               style={[
                 styles.txt,
-                {color: focused ? colors.primary : colors.lightGrey},
+                { color: focused ? colors.primary : colors.lightGrey },
               ]}>
               Chat
             </Text>
@@ -163,18 +163,18 @@ const BottomNavigator = () => {
         name="Announcement"
         component={Announcement}
         options={{
-          tabBarIcon: ({focused}) => (
+          tabBarIcon: ({ focused }) => (
             <Eicon
               name="modern-mic"
               size={WP('5')}
               color={focused ? colors.primary : colors.lightGrey}
             />
           ),
-          tabBarLabel: ({focused}) => (
+          tabBarLabel: ({ focused }) => (
             <Text
               style={[
                 styles.txt,
-                {color: focused ? colors.primary : colors.lightGrey},
+                { color: focused ? colors.primary : colors.lightGrey },
               ]}>
               Announcement
             </Text>

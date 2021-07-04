@@ -43,7 +43,7 @@ const CartReducer = (state = initialState, action) => {
     case Types.EMPTY_CART: {
       return {
         ...state,
-        cart: [],
+        cartItems: [],
       };
     }
 

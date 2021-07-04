@@ -1,18 +1,18 @@
-import React, {useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {Input} from 'react-native-elements';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { Input } from 'react-native-elements';
 import * as Work from '../exporter';
 
 const {
   WP,
-  THEME: {colors},
+  THEME: { colors },
 } = Work;
 const Textinput = (props) => {
   return (
     <Input
       inputContainerStyle={[
         styles.inputContainer,
-        {borderColor: props.isError ? 'red' : null},
+        { borderColor: props.isError ? 'red' : null },
       ]}
       inputStyle={styles.inputStyle}
       {...props}

@@ -1,8 +1,8 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {createDrawerNavigator} from '@react-navigation/drawer';
+import { StyleSheet, Text, View } from 'react-native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import Dashboard from './bottomNavigator';
-import {Setting} from '../../pages';
+import { Setting, OrderChart } from '../../pages';
 
 const Drawer = createDrawerNavigator();
 
@@ -10,6 +10,7 @@ const DrawerNavigator = () => {
   return (
     <Drawer.Navigator>
       <Drawer.Screen name="Dashboard" component={Dashboard} />
+      <Drawer.Screen name="Orders Chart" component={OrderChart} />
       <Drawer.Screen name="Setting" component={Setting} />
     </Drawer.Navigator>
   );
