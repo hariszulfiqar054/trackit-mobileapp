@@ -53,8 +53,6 @@ const BottomNavigator = () => {
     try {
       watcherId.current = Geolocation.watchPosition(
         (position) => {
-          console.log('----', position);
-
           if (socket) {
             socket.emit('locationChange', {
               id: user?.data?._id,
@@ -62,6 +60,7 @@ const BottomNavigator = () => {
               name: user?.data?.name,
               lat: position.coords.latitude,
               lng: position.coords.longitude,
+              area: user?.data?.area,
             });
           }
         },
@@ -83,6 +82,7 @@ const BottomNavigator = () => {
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         enableLocation();
       } else {
+        enableLocation();
         console.log('location permission denied');
         alert('Location permission denied');
       }

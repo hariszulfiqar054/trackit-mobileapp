@@ -1,5 +1,5 @@
-import React, {useEffect, useState, useCallback, useLayoutEffect} from 'react';
-import {StyleSheet, Text, View, FlatList} from 'react-native';
+import React, { useEffect, useState, useLayoutEffect } from 'react';
+import { StyleSheet, Text, View, FlatList } from 'react-native';
 import {
   Header,
   SafeWrapper,
@@ -10,16 +10,18 @@ import {
 import * as Work from '../../../shared/exporter';
 import Micon from 'react-native-vector-icons/MaterialIcons';
 import axios from 'axios';
-import {SkypeIndicator} from 'react-native-indicators';
-import {useIsFocused} from '@react-navigation/native';
+import { SkypeIndicator } from 'react-native-indicators';
+import { useIsFocused } from '@react-navigation/native';
 import moment from 'moment';
+import { useSelector } from 'react-redux';
 
 const {
   WP,
   HP,
-  THEME: {colors},
+  THEME: { colors },
 } = Work;
-const Announcement = ({navigation}) => {
+const Announcement = ({ navigation }) => {
+  const user = useSelector((state) => state.auth.user);
   const isFocused = useIsFocused();
   const [currDate, setCurrDate] = useState('');
   const [month, setMonth] = useState('');
@@ -104,6 +106,11 @@ const Announcement = ({navigation}) => {
   return (
     <SafeWrapper>
       <Header label="Announcements" drawer={navigation} />
+      <View>
+        <Text style={styles.assignedAreaTxt}>
+          Assigned Area : {user?.data?.area}
+        </Text>
+      </View>
       <View style={styles.dateChangeContainer}>
         <BtnWrapper
           onPress={() => {
@@ -111,7 +118,7 @@ const Announcement = ({navigation}) => {
           }}>
           <View style={styles.iconContainer}>
             <Micon
-              style={{padding: WP('1')}}
+              style={{ padding: WP('1') }}
               name="keyboard-arrow-left"
               color={Work.THEME.colors.grey}
               size={WP('8')}
@@ -120,7 +127,7 @@ const Announcement = ({navigation}) => {
         </BtnWrapper>
         <View>
           <Text
-            style={[styles.date, {fontWeight: 'bold', fontSize: WP('4.6')}]}>
+            style={[styles.date, { fontWeight: 'bold', fontSize: WP('4.6') }]}>
             {Work.months[month]}
           </Text>
           <Text style={styles.date}>{currDate}</Text>
@@ -131,7 +138,7 @@ const Announcement = ({navigation}) => {
           }}>
           <View style={styles.iconContainer}>
             <Micon
-              style={{padding: WP('1')}}
+              style={{ padding: WP('1') }}
               name="keyboard-arrow-right"
               color={Work.THEME.colors.grey}
               size={WP('8')}
@@ -147,7 +154,7 @@ const Announcement = ({navigation}) => {
             refreshing={isLoading}
             onRefresh={onRefresh}
             data={announcementData}
-            renderItem={({item}) => (
+            renderItem={({ item }) => (
               <AnnouncementCard
                 city={item?.city}
                 message={item?.text}
@@ -160,13 +167,13 @@ const Announcement = ({navigation}) => {
             <Btn
               label="Load More"
               containerStyle={styles.btnContainer}
-              labelStyle={{fontSize: WP('3.7'), padding: WP('1')}}
+              labelStyle={{ fontSize: WP('3.7'), padding: WP('1') }}
               onPress={() => setPage((pre) => pre + 1)}
             />
           ) : null}
         </>
       ) : (
-        <View style={{flex: 1, justifyContent: 'center'}}>
+        <View style={{ flex: 1, justifyContent: 'center' }}>
           <Text style={styles.noData}>Oops! No Announcement</Text>
         </View>
       )}
@@ -200,5 +207,10 @@ const styles = StyleSheet.create({
     fontSize: WP('5'),
     fontWeight: 'bold',
     textAlign: 'center',
+  },
+  assignedAreaTxt: {
+    fontSize: WP('4'),
+    textAlign: 'center',
+    fontWeight: 'bold',
   },
 });

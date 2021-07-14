@@ -1,23 +1,23 @@
 import React from 'react';
-import {StyleSheet, Text, View, Image} from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
 import * as Work from '../exporter';
-import {BtnWrapper} from './';
+import { BtnWrapper } from './';
 import Eicon from 'react-native-vector-icons/EvilIcons';
 
 const {
   WP,
-  THEME: {colors},
+  THEME: { colors },
 } = Work;
-const StockCard = ({img, price, qty, onPress, name}) => {
+const StockCard = ({ img, price, qty, onPress, name }) => {
   return (
     <View style={styles.conatiner}>
-      <Image style={styles.img} source={{uri: img}} />
-      <View style={{marginStart: WP('2')}}>
+      <Image style={styles.img} source={{ uri: img }} />
+      <View style={{ marginStart: WP('2') }}>
         <Text style={styles.name}>{name}</Text>
         <Text style={styles.price}>Rs. {price}</Text>
         <Text style={styles.price}>Qty: {qty}</Text>
       </View>
-      {onPress ? (
+      {onPress && Number(qty) > 0 ? (
         <BtnWrapper onPress={onPress}>
           <View style={styles.btnContainer}>
             <Eicon name="cart" color={colors.white} size={WP('5')} />
